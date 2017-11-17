@@ -24,7 +24,7 @@
 
 		<div class="form-group">
 			<label for="pwd"> Link to Photo Image (Required) </label>
-			<input type="password" class="form-control" id="photo">
+			<input type="url" class="form-control" id="photo">
 		</div><hr>
 		
 		<h3><strong>Question 1</strong></h3>
@@ -152,7 +152,7 @@
 
         <footer>
       		<div class="container">
-       			<p><a href="/api/theList">API Friends Link</a> | <a href="https://github.com/yu-jung-jung/Week13_Express">GitHub Repo</a></p>
+       			<p><a href="/api/friends">API Friends Link</a> | <a href="https://github.com/yu-jung-jung/Week13_Express">GitHub Repo</a></p>
       		</div>
    		</footer>
 
@@ -184,27 +184,34 @@
 <!-- javascript -->
     <script type="text/javascript">
         $("#submit").on("click", function(){
-            event.prevenDefault();
+            event.preventDefault();
 
 
-            var userInfo = {
+            var userData = {
 
                 name: $("#name").val().trim(),
                 photo: $("#photo").val().trim(),
                 scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(),$("#q10").val()]
             };
 
-            $.post("api/new", userInfo)
-                .done(function(data){
+            var currentURL = window.location.origin;
+
+            $.post(currentURL +"/api/friends", userData, function(data){
                     $("#myModal").modal('show');
                     $("#matchName").text(data.name);
-                    $("#matchImage").attr('src', data.photo);                 
+                    $("#matchImage").attr('src', data.photo);      
 
-                })
+            })
+                // .done(function(data){
+                //     $("#myModal").modal('show');
+                //     $("#matchName").text(data.name);
+                //     $("#matchImage").attr('src', data.photo);                 
 
-                $("#name").val("");
-                $("#photo").val("");
-                [$("#q1").val(""), $("#q2").val(""), $("#q3").val(""), $("#q4").val(""), $("#q5").val(""), $("#q6").val(""), $("#q7").val(""), $("#q8").val(""), $("#q9").val(""),$("#q10").val("")]
+                // })
+
+                // $("#name").val("");
+                // $("#photo").val("");
+                // [$("#q1").val(""), $("#q2").val(""), $("#q3").val(""), $("#q4").val(""), $("#q5").val(""), $("#q6").val(""), $("#q7").val(""), $("#q8").val(""), $("#q9").val(""),$("#q10").val("")]
         })  
 
 
